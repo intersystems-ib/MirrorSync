@@ -1,0 +1,14 @@
+*.bak
+samples/input/*.xml
+samples/input/*.hl7
+samples/output/*.xml
+samples/output/*.hl7*
+samples/log/*.xml
+samples/error/*.xml
+samples/unittest/*
+tmp/*
+iris.key
+.vscode/*
+iris.sys.d1/*
+iris.sys.d2/*
+.DS_Store

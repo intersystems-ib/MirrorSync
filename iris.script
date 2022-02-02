@@ -1,0 +1,21 @@
+    // Unexpire passwords for dev mode
+    zn "%SYS"
+    Do ##class(Security.Users).UnExpireUserPasswords("*")
+    // Use this script for testing installing procedures 
+    // --------------------------
+    // ZPM install (MirrorSync)
+    // --------------------------
+    // install latest zpm version
+    do $SYSTEM.OBJ.Load("/ISC/src/zpm.xml", "ck")
+    zpm "install webterminal"
+
+    do $SYSTEM.OBJ.ImportDir("/ISC/src/IBSP/TOOLS/MirrorSync/","*","cuk")
+    
+    //Uncomment if mirror setup is needed
+    //set hostname = ##class(%SYSTEM.INetInfo).LocalHostName()
+    //set sc = ##class(IBSP.TOOLS.MirrorSync.Installer).MirrorSetup(hostname) 
+    
+
+    // Install MirrorSync
+    set sc = ##class(IBSP.TOOLS.MirrorSync.Installer).Run("/ISC/shared")
+    halt

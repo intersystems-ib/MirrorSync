@@ -1,0 +1,81 @@
+version: '3.7'
+# This compose runs 3 services: 
+# - 2 x IRIS instances and 
+# - 1 x Arbiter
+#
+# Durable %SYS directories will be
+# ./iris.sys.d1
+# ./iris.sys.d2
+#
+# A network is defined with a rang
+# a) pin services to an IP and 
+# b) to avoid conflict with local 
+#
+networks:
+  MirrorSync-iris-net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv4: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/16
+services:
+  iris1:
+    image: containers.intersystems.com/intersystems/iris:2021.1.0.215.0
+    command: --key /ISC/iris.key -b /ISC/iris-setup.sh
+    hostname: iris1
+    networks:
+      MirrorSync-iris-net:
+        ipv4_address: 10.1.0.11
+    ports:
+      - 9011:1972
+      - 9012:52773
+    environment:
+      - ISC_DATA_DIRECTORY=/ISC/iris.sys.d1
+      - ISC_CPF_MERGE_FILE=/ISC/mirrorPrimary.conf
+    volumes:
+      - ./:/ISC
+
+  iris2:
+    image: containers.intersystems.com/intersystems/iris:2021.1.0.215.0
+    command: --key /ISC/iris.key --before 'sleep 45;/ISC/iris-setup.sh'
+    hostname: iris2
+    networks:
+      MirrorSync-iris-net:
+        ipv4_address: 10.1.0.12
+    ports:
+      - 9021:1972
+      - 9022:52773
+    environment:
+      - ISC_DATA_DIRECTORY=/ISC/iris.sys.d2
+      - ISC_CPF_MERGE_FILE=/ISC/mirrorBackup.conf
+    volumes:
+     - ./:/ISC
+
+  arbiter:
+    image: containers.intersystems.com/intersystems/arbiter:2021.1.0.215.0
+    networks:
+      MirrorSync-iris-net:
+        ipv4_address: 10.1.0.13
+    hostname: arbiter
+    expose:
+      - 2188
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

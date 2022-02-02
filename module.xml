@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+  <Document name="saml-cos.ZPM">
+    <Module>
+      <Name>mirror-sync</Name>
+      <Version>0.1.0</Version>
+      <Description>Synchronise Security configurations between members of InterSystems Mirror Technology</Description>
+      <Keywords>mirror interoperability iris healthconnect security synchronization</Keywords>
+      <Author>
+        <Person>InterSystems Iberia</Person>
+        <Organization>InterSystems</Organization>
+        <CopyrightDate>2021</CopyrightDate>
+        <License>MIT</License>
+      </Author>
+      <Packaging>module</Packaging>
+      <SourcesRoot>src</SourcesRoot>
+      <SystemRequirements Version=">=2020.1" Interoperability="enabled" />
+      <Resource Name="IBSP.TOOLS.MirrorSecurity"/>
+    </Module>
+  </Document>
+</Export>
